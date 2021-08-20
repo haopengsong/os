@@ -36,6 +36,7 @@ void BBQ::insert(int item) {
     lock.acquire();
     while ((nextEmpty - front) == MAX) {
         itemRemoved.wait(&lock);
+
     }
     items[ nextEmpty % MAX ] = item;
     nextEmpty++;
