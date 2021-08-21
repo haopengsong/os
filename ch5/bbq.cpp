@@ -2,6 +2,15 @@
  * A Blocking Bounded Queue:
  * 1) Thread trying to remove an item from an empty queue will wait until an item is available ;
  * 2) Thread trying to put an item into a full queue will wait until there is room ;
+ * 
+ * Q1: What invariants hold when wait returns in BBQ::remove? Is an item guaranteed to be in the queue?
+ * Why or why not?
+ * Answer: Exactly the same invariants hold when wait returns as when the thread first acquired the lock.
+ * In particular, although there is always an item in the queue when insert calls signal, there is no 
+ * guarantee that the item is still in the queue when wait returns. Even if the language runtime avoids 
+ * spurious wakeups, some other thread may have run between the signal and the return from wait. That
+ * thread may perform a remove, acquire the BBQ::lock, find the item, and empty the queue, all before 
+ * wait returns.
  */
 
 // Thread-safe blocking queue
