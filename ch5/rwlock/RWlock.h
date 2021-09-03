@@ -30,6 +30,10 @@ private:
 public:
     RWLock();
     ~RWLock();
+    // doneRead and doneWrite do not wait (other than to acquire the mutual exclusion lock)
+    // Therefore, these methods do not need condition variables
+    // Always acquire/release lock at the beginning/end of a method (never in the middle)
+    // We should write calls to acquire and release the mutual exclusion lock at the start and end of each public method before even thinking in detail about what these methods do.
     void startRead();
     void doneRead();
     void startWrite();
