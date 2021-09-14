@@ -44,3 +44,6 @@ void checkin() {
     }
     lok.release();
 }
+
+// Problem is: the state of the barrier does not revert to the same state it had when it was created, 
+// so the barrier can only be used once.
